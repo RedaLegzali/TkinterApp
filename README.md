@@ -7,6 +7,7 @@
 ## Description 
 
 TkinterApp is a small desktop app that contains a notepad and a calculator.
+
 TkinterApp est une petite application bureau qui contient un bloc notes et une calculatrice.
 
 ## Technologies
