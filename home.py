@@ -1,45 +1,63 @@
-import tkinter as tk
-from PIL import ImageTk, Image
+# Import de la librarie Tkinter
+import tkinter as tk 
 
+# Définition de la fonction create_home utilisé dans le main
 def create_home():
+    # Déclaration de choice
     choice = ''
+    # Création de la fenetre 
+    window = tk.Tk()
+    # Nouveau titre 
+    window.title('Tkinter App')
+    # Désactiver l'option de redimensionner la fenetre
+    window.resizable(0,0)
+    # Taille de la fenetre
+    width, height = 800, 500
+    size = "{}x{}".format(width, height)
+    window.geometry(size)
 
-    app = tk.Tk()
-    width = 800
-    height = 500
-    geometry = f"{width}x{height}"
-    app.geometry(geometry)
-    app.resizable(0,0)
-    app.title('Tkinter App')
 
+    # Définition de la fonction qui sera 
+    # éxécuter lors du clique du bouton Calculatrice
     def calculator():
+        # Rendre la variable choice nonlocal
+        # Afin de pouvoir modifier sa valeur
         nonlocal choice
         choice = 'calculator'
-        app.destroy()
+        # Détruire la fenetre Home
+        window.destroy()
+    # Définition de la fonction qui sera 
+    # éxécuter lors du clique du bouton Bloc Notes
     def note():
+        # Rendre la variable choice nonlocal
+        # Afin de pouvoir modifier sa valeur
         nonlocal choice
         choice = 'note'
-        app.destroy()
+        # Détruire la fenetre Home
+        window.destroy()
 
-    bg_img = ImageTk.PhotoImage(
-        Image.open('images/bg.jpg').resize( (width, height), Image.ANTIALIAS )
-    )
-    calc_img = ImageTk.PhotoImage(
-        Image.open('images/calc.png').resize( (100, 100), Image.ANTIALIAS )
-    )
-    note_img = ImageTk.PhotoImage(
-        Image.open('images/note.png').resize( (100, 100), Image.ANTIALIAS )
-    )
+    # Création d'un label qui sera utilisé comme arrière plan
+    bg_label = tk.Label(window, width=width, height=height, bg="#325288")
+    # Positionnement du label
+    bg_label.pack()
 
-    bg_label = tk.Label(app, width=width, height=height, image=bg_img)
-    bg_label.pack(fill=tk.BOTH)
-    calc_btn = tk.Button(app, width=100, height=100, image=calc_img, border=0, cursor='hand2', command=calculator)
-    note_btn = tk.Button(app, width=100, height=100, image=note_img, border=0, cursor='hand2', command=note)
-    y = height // 2 - 100
-    x = width // 2
-    calc_btn.place(x=x-80, y=y)
-    note_btn.place(x=x+50, y=y)
+    # Création des deux boutons
+    calc_button = tk.Button(
+        bg_label,cursor="hand2", border=0, bg="#28b5b5", fg="#fff", padx=10, pady=10, text="Calculator", command=calculator
+    )
+    note_button = tk.Button(
+        bg_label,cursor="hand2", border=0, bg="#8fd9a8", fg="#fff", padx=10, pady=10, text="Bloc Notes", command=note
+    )
+    # Positionnement des deux boutons
+    # On utilise place et les attributs rel
+    # pour placer les éléments relativement au parents 
+    # qui est la fenetre, dans ce cas on centre les éléments
+    calc_button.place(relx=.4, rely=.5, anchor="center")
+    note_button.place(relx=.6, rely=.5, anchor="center")
 
-    done = app.mainloop()
+    # Lancement de l'application
+    done = window.mainloop()
     if done is None:
+        # Une fois la fenetre détruite
+        # On retourne la valeur de choice
         return choice
